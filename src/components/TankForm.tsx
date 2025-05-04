@@ -10,9 +10,10 @@ interface Tank {
 
 interface TankFormProps {
   onTankCreated: () => void;
+  onCancel: () => void;
 }
 
-const TankForm: React.FC<TankFormProps> = ({ onTankCreated }) => {
+const TankForm: React.FC<TankFormProps> = ({ onTankCreated, onCancel }) => {
   const [tank, setTank] = useState<Tank>({
     name: '',
     species: '',
@@ -95,12 +96,21 @@ const TankForm: React.FC<TankFormProps> = ({ onTankCreated }) => {
         />
       </div>
 
-      <button
-        type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
-      >
-        Create Tank
-      </button>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
+        >
+          Create Tank
+        </button>
+      </div>
     </form>
   );
 };

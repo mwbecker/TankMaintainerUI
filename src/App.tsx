@@ -48,7 +48,10 @@ const App: React.FC = () => {
       </header>
 
       {currentView === 'form' ? (
-        <TankForm onTankCreated={handleTankCreated} />
+        <TankForm
+        onTankCreated={handleTankCreated}
+        onCancel={() => setCurrentView('list')}
+      />
       ) : loading ? (
         <p>Loading tanks...</p>
       ) : error ? (
