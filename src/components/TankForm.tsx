@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { auth } from '../firebase'; // Import your Firebase auth instance
+
 
 interface Tank {
   name: string;
@@ -34,10 +36,23 @@ const TankForm: React.FC<TankFormProps> = ({ onTankCreated, onCancel }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const user = auth.currentUser;
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+  
+      const idToken = await user.getIdToken();
+  
       await axios.post(
         `${import.meta.env.VITE_REACT_API_BASE_URL}/api/tanks`,
-        tank
+        tank,
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        }
       );
+  
       setTank({ name: '', species: '', volumeGallons: 0, notes: '' });
       onTankCreated(); // Notify App to refresh + navigate back
     } catch (error) {
