@@ -96,7 +96,7 @@ const App: React.FC = () => {
       ) : currentView === 'form' ? (
         <TankForm onTankCreated={handleTankCreated} onCancel={() => setCurrentView('list')} />
       ) : (
-        <TankList tanks={tanks} />
+        <TankList tanks={tanks} onRefresh={fetchTanks} />
       )}
     </div>
   );
